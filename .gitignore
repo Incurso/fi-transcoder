@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Sensitive config files
+config.yml
+
+# Log files
+files-*.json

@@ -1,0 +1,42 @@
+client:
+  websocket:
+    host: <hostname or ip>
+    port: 8765
+    heartbeat: 10000
+
+  deleteFailed: true
+  destinationDirectory: <destination path>
+  encodingPreset: x265
+
+server:
+  websocket:
+    listeningPort: 8765
+    heartbeat: 10000
+  
+  scanInterval: 3600
+
+  filesDone: ./files-done.json
+  filesErrored: ./files-errored.json
+  filesIgnored: ./files-ignored.json
+  filesPending: ./files-pending.json
+
+
+  sourceDirectory: <source path>
+
+  validExtensions: 
+    - .avi
+    - .divx
+    - .mkv
+    - .mp4
+    - .mpg
+    - .mpeg
+    - .ogm
+
+  excludedCodecs: 
+    - vp9
+
+  excludedGroups: 
+    - -Fi
+    - -Joy
+    - -UTR
+    - -Judas
