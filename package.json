@@ -1,0 +1,35 @@
+{
+  "name": "fi-transcoder",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node client.js",
+    "serve": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Incurso/fi-transcoder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Incurso/fi-transcoder/issues"
+  },
+  "homepage": "https://github.com/Incurso/fi-transcoder#readme",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.10.1",
+    "eloquent-ffmpeg": "^0.14.0",
+    "ffmpeg-static": "^4.4.0",
+    "ffprobe-static": "^3.0.0",
+    "js-yaml": "^4.1.0",
+    "minimist": "^1.2.5",
+    "strftime": "^0.10.0",
+    "systeminformation": "^5.9.15",
+    "ws": "^8.3.0"
+  }
+}
