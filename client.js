@@ -111,7 +111,7 @@ const encodeVideo = async (src, dst, preset) => {
 
   await proc.complete()
   worker.task = 'idle'
-  console.log(`Finished transcoding ${src}`)
+  console.log(`\nFinished transcoding ${src}`)
 }
 
 const connect = () => {
@@ -132,7 +132,7 @@ const connect = () => {
   }
 
   ws.on('open', () => {
-    console.log(`\Connected to ${config.websocket.host}.`)
+    console.log(`\nConnected to ${config.websocket.host}.`)
     heartbeat()
   })
 
