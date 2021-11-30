@@ -62,6 +62,7 @@ const encodeVideo = async (src, dst, preset) => {
     .args('-map', '-v')
     .args('-map', 'V')
     // Video
+    //.args('-c:v', 'hevc_nvenc') // uses HEVC/h265 GPU hardware encoder
     .args('-c:v', 'libx265')
     .args('-x265-params', 'crf=23')
     // Audio
@@ -72,7 +73,19 @@ const encodeVideo = async (src, dst, preset) => {
 
   const info = await input.probe({ ffprobePath });
   console.log(info)
-  const proc = await cmd.spawn({ ffmpegPath })
+
+  // Define errorMessage as false so that we can see when we have an error
+  let errorMessage = false
+  const proc = await cmd
+    .spawn({
+      ffmpegPath,
+      logger: {
+        error: async (message) => {
+          // Set errorMessage if we get an error
+          errorMessage = message;
+        }
+      }
+    })
 
   for await (const { bytes, frames, fps, speed, time } of proc.progress()) {
     const task = worker.task
@@ -88,6 +101,12 @@ const encodeVideo = async (src, dst, preset) => {
     process.stdout.clearLine()
     process.stdout.cursorTo(0)
     process.stdout.write(`${path.basename(src)}: speed=${speed}x fps=${fps} ${task.file.progress}% time=${task.file.timemark}`)
+
+    // If we get an error message, throw the error
+    if (errorMessage !== false) {
+      await proc.abort()
+      throw new Error(errorMessage)
+    }
   }
 
   await proc.complete()
@@ -108,8 +127,6 @@ const connect = () => {
     ws.send(JSON.stringify({ status: worker }))
 
     pingTimeout = setTimeout(() => {
-      // TODO: change this to reconnect
-      //this.terminate()
       ws.close()
     }, config.websocket.heartbeat + 1000)
   }
